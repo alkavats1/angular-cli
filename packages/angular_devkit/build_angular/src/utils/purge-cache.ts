@@ -29,9 +29,10 @@ export async function purgeStaleBuildCache(context: BuilderContext): Promise<voi
     .filter((d) => join(basePath, d.name) !== path && d.isDirectory())
     .map((d) => {
       const subPath = join(basePath, d.name);
-      try {
-        return fsPromises.rm(subPath, { force: true, recursive: true, maxRetries: 3 });
-      } catch {}
+
+      return fsPromises
+        .rm(subPath, { force: true, recursive: true, maxRetries: 3 })
+        .catch(() => undefined);
     });
 
   await Promise.all(entriesToDelete);
