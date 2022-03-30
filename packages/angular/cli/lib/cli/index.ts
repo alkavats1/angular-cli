@@ -19,7 +19,7 @@ import { findWorkspaceFile } from '../../src/utilities/project';
 export { VERSION } from '../../src/utilities/version';
 
 /* eslint-disable no-console */
-export default async function (options: { testing?: boolean; cliArgs: string[] }) {
+export default async function (options: { cliArgs: string[] }) {
   // This node version check ensures that the requirements of the project instance of the CLI are met
   const [major, minor] = process.versions.node.split('.').map((part) => Number(part));
   if (major < 14 || (major === 14 && minor < 15)) {
@@ -102,12 +102,6 @@ export default async function (options: { testing?: boolean; cliArgs: string[] }
       // Log nothing.
     } else {
       logger.fatal('An unexpected error occurred: ' + JSON.stringify(err));
-    }
-
-    if (options.testing) {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      throw err;
     }
 
     return 1;
